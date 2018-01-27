@@ -125,7 +125,7 @@ nav a:hover {
    ============== */
 
 .main {
-    padding: 30px 0;
+    padding: 1% 0;
 }
 
 .main article h1 {
@@ -161,6 +161,13 @@ html, body {
     font-size: 1em;
 }
 
+h2 {
+    margin: 0;
+    color: #3de5ff;
+    border-bottom: 2px solid #3de5ff;
+    margin-bottom: 0.2em;
+}
+
 .main-container {
     height: 100%;
     width: 100%;
@@ -171,41 +178,82 @@ html, body {
 }
 
 .card_holder {
-    width: 70%;
+    width: 100%;
     float: left;
+    margin-bottom: 1em;
 }
 
 .card {
-    height: 10em;
-    width: 20%;
-    min-height: 10em;
-    margin-right: 0.5em;
-    padding: 1em;
-    color: #3de5ff;
+    width: 21%;
+    margin-left: 5%;
+    min-height: 6em;
+    color: #2e2e2e;
+    font-size: 1.25em;
     font-weight: bold;
-    border: 3px solid #3de5ff;
+    background-color: #3de5ff;
     float: left;
     cursor: pointer;
+    border-bottom: 4px solid #0782ce;
+}
+
+.card:hover {
+    border-top: 4px solid #2e2e2e;
+    border-bottom: none;
+}
+
+.card p {
+    padding-left: 0.2em;
+    margin: 0;
+}
+
+.card:first-child {
+    margin-left: 0;
 }
 
 .card:hover, .card.active {
-    background-color: #21565e;
+    background-color: #0782ce;
+}
+
+.rules {
+    width: 21%;
+    margin-left: 5%;
+    min-height: 6em;
+    color: #3de5ff;
+    font-weight: bold;
+    background-color: #2e2e2e;
+    float: left;
+}
+
+.rules h3 {
+    padding-left: 0.2em;
+    margin: 0;
+    font-size: 1.25em;
+}
+
+.rules p {
+    padding-left: 0.2em;
+    margin: 0;
 }
 
 .stats_holder {
-    width: 30%;
-    float: left;
+    width: 100%;
+    margin-bottom: 0.5em;
 }
 
 .usage_measure {
     height: 2em;
-    width: 100%;
-    margin-bottom: 1em;
+    width: 30%;
     border-bottom: 2px solid #3de5ff;
+    margin-left: 5%;
     text-transform: uppercase;
     color: #0782ce;
     font-weight: bold;
     line-height: 2em;
+    float: left;
+}
+
+.usage_measure:first-child {
+    margin-left: 0;
 }
 
 #cpu_usage {
@@ -226,24 +274,64 @@ html, body {
     background-color: #29c421;
 }
 
+.recover_holder {
+    height: 2em;
+    width: 30%;
+    float: left;
+    margin-left: 5%;
+    text-transform: uppercase;
+    color: #0782ce;
+    font-weight: bold;
+    line-height: 2em;
+}
+
+.recover_holder:first-child {
+    margin-left: 0;
+}
+
+.recover_holder .button {
+    height: 100%;
+    width: 100%;
+    background-color: #3de5ff;
+    color: #2e2e2e;
+    opacity: 0.2;
+    border-bottom: 2px solid #0782ce;
+}
+
+.recover_holder .button.active {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.recover_holder .button.active:hover {
+    background-color: #0782ce;
+    border-top: 2px solid #2e2e2e;
+    border-bottom: none;
+}
+
 .malus {
     color: #ce0857;
 }
 
-.value_font {
-    color: #0782ce;
-}
-
 .opponent_row {
     height: 4em;
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 .opponent_holder {
-    width: 17%;
-    margin-right: 0.5em;
+    width: 21%;
+    margin-left: 5%;
     float: left;
+    cursor: pointer;
+}
+
+.opponent_holder:first-child {
+    margin-left: 0;
+}
+
+.opponent_holder.active .opponent_name,
+.opponent_holder:hover .opponent_name {
+    background-color: #0782ce;
 }
 
 .opponent_name {
@@ -258,13 +346,17 @@ html, body {
 }
 
 .opponent_stat {
-    width: 32%;
+    width: 30%;
+    margin-left: 5%;
     height: 100%;
     float: left;
 }
 
+.opponent_stat:first-child {
+    margin-left: 0;
+}
+
 .opponent_cpu {
-    width: 33%;
     background-color: #dbcf2e;
 }
 
@@ -288,13 +380,15 @@ html, body {
     color: #0782ce;
     font-weight: bold;
     line-height: 5em;
+    margin-bottom: 1em;
+    border-bottom: 2px solid #3de5ff;
 }
 
 #upload {
     height: 2em;
     width: 60%;
     background-color: #0782ce;
-    font-size: 2.5em;
+    font-size: 2em;
 }
 
 .bg_font {
