@@ -159,6 +159,14 @@ html, body {
     min-height: 100%;
     font-family: 'Share Tech Mono', monospace;
     font-size: 1em;
+
+      -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 
 h2 {
@@ -191,14 +199,10 @@ h2 {
     font-size: 1.25em;
     font-weight: bold;
     background-color: #3de5ff;
+    text-transform: uppercase;
     float: left;
     cursor: pointer;
     border-bottom: 4px solid #0782ce;
-}
-
-.card:hover {
-    border-top: 4px solid #2e2e2e;
-    border-bottom: none;
 }
 
 .card p {
@@ -212,6 +216,8 @@ h2 {
 
 .card:hover, .card.active {
     background-color: #0782ce;
+    border-top: 4px solid #2e2e2e;
+    border-bottom: none;
 }
 
 .rules {
@@ -298,18 +304,19 @@ h2 {
     border-bottom: 2px solid #0782ce;
 }
 
-.recover_holder .button.active {
+.recover_holder .button.enabled {
     opacity: 1;
     cursor: pointer;
 }
 
-.recover_holder .button.active:hover {
+.recover_holder .button.enabled:hover,
+.recover_holder .button.active {
     background-color: #0782ce;
     border-top: 2px solid #2e2e2e;
     border-bottom: none;
 }
 
-.malus {
+.costs {
     color: #ce0857;
 }
 
@@ -318,7 +325,8 @@ h2 {
     margin-bottom: 1em;
 }
 
-.opponent_holder {
+.opponent_holder,
+.submit_button_holder {
     width: 21%;
     margin-left: 5%;
     float: left;
@@ -374,6 +382,32 @@ h2 {
     background-color: #0782ce;
 }
 
+#submit_button {
+    height: 100%;
+    width: 100%;
+    color: #2e2e2e;
+    background-color: #3de5ff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5em;
+    line-height: 3em;
+    border-bottom: 4px solid #0782ce;
+    cursor: pointer;
+}
+
+#submit_button:hover {
+    background-color: #0782ce;
+    border-top: 4px solid #2e2e2e;
+    border-bottom: none;
+}
+
+#submit_button.error {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
 .upload_holder {
     width: 100%;
     text-transform: uppercase;
@@ -398,6 +432,24 @@ h2 {
     font-weight: bold;
     line-height: 2em;
     overflow: hidden;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 /*

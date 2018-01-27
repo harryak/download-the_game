@@ -50,17 +50,17 @@
                     </div>
                     <div class="stats_holder clearfix">
                         <div class="recover_holder">
-                            <div class="button recover active">
+                            <div class="button recover enabled" data-target="cpu">
                                 &nbsp;&uarr;&nbsp;recover
                             </div>
                         </div>
                         <div class="recover_holder">
-                            <div class="button recover">
+                            <div class="button recover" data-target="bandwidth">
                                 &nbsp;&uarr;&nbsp;recover
                             </div>
                         </div>
                         <div class="recover_holder">
-                            <div class="button recover">
+                            <div class="button recover" data-target="route">
                                 &nbsp;&uarr;&nbsp;recover
                             </div>
                         </div>
@@ -77,26 +77,26 @@
                 <div class="clearfix">
                     <h2>Attacks</h2>
                     <div class="card_holder clearfix">
-                        <div class="card" id="card_0">
+                        <div class="card" id="card_0" data-target="0">
                             <p>Attack 1:</p>
                             <p>CPU: <span class="value_font">0</span></p>
                             <p>BW: <span class="value_font">0</span></p>
                             <p>RT: <span class="value_font">0</span></p>
-                            <p class="malus">Malus: CPU</p>
+                            <p class="costs">costs: CPU</p>
                         </div>
-                        <div class="card" id="card_1">
+                        <div class="card" id="card_1" data-target="1">
                             <p>Attack 2:</p>
                             <p>CPU: <span class="value_font">0</span></p>
                             <p>BW: <span class="value_font">0</span></p>
                             <p>RT: <span class="value_font">0</span></p>
-                            <p class="malus">Malus: CPU</p>
+                            <p class="costs">costs: CPU</p>
                         </div>
-                        <div class="card" id="card_2">
+                        <div class="card" id="card_2" data-target="2">
                             <p>Attack 3:</p>
                             <p>CPU: <span class="value_font">0</span></p>
                             <p>BW: <span class="value_font">0</span></p>
                             <p>RT: <span class="value_font">0</span></p>
-                            <p class="malus">Malus: CPU</p>
+                            <p class="costs">costs: CPU</p>
                         </div>
                         <div class="rules">
                             <h3>Rules:</h3>
@@ -109,7 +109,7 @@
                 <div class="clearfix">
                     <h2>Adversaries</h2>
                     <div class="opponent_row clearfix">
-                        <div class="opponent_holder clearfix">
+                        <div class="opponent_holder clearfix" data-target="jan123">
                             <div class="opponent_name">
                                 &nbsp;lel420blazeit
                             </div>
@@ -124,7 +124,7 @@
                             <div class="opponent_upload">
                             </div>
                         </div>
-                        <div class="opponent_holder clearfix active">
+                        <div class="opponent_holder clearfix" data-target="felix345">
                             <div class="opponent_name">
                                 &nbsp;lel420blazeit
                             </div>
@@ -139,7 +139,7 @@
                             <div class="opponent_upload">
                             </div>
                         </div>
-                        <div class="opponent_holder clearfix">
+                        <div class="opponent_holder clearfix" data-target="sdfhsdh">
                             <div class="opponent_name">
                                 &nbsp;lel420blazeit
                             </div>
@@ -154,7 +154,7 @@
                             <div class="opponent_upload">
                             </div>
                         </div>
-                        <div class="opponent_holder clearfix">
+                        <div class="opponent_holder clearfix" data-target="3">
                             <div class="opponent_name">
                                 &nbsp;lel420blazeit
                             </div>
@@ -186,11 +186,67 @@
                             <div class="opponent_upload">
                             </div>
                         </div>
+                        <div class="opponent_holder clearfix">
+                            <div></div>
+                        </div>
+                        <div class="opponent_holder clearfix">
+                            <div></div>
+                        </div>
+                        <div class="submit_button_holder clearfix">
+                            <div id="submit_button">
+                                &nbsp;confirm
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div> <!-- #main -->
         </div> <!-- #main-container -->
 
         <script src="js/main.js"></script>
+
+        <script type="text/javascript">
+            selection = [];
+
+            $(document).ready(function() {
+                $(".button.recover.enabled").click(function() {
+                    $(this).addClass("active");
+                    $(".card, .opponent_holder").removeClass("active");
+
+                    selection = [];
+                    selection["action"] = "recover";
+                    selection["target"] = $(this).attr("data-target");
+                });
+
+                $(".card").click(function() {
+                    $(".card, .button.recover.enabled").removeClass("active");
+                    $(this).addClass("active");
+
+                    selection["target"] = null;
+                    selection["action"] = "attack";
+                    selection["card"] = $(this).attr("data-target");
+                });
+
+                $(".opponent_holder").click(function() {
+                    $(".opponent_holder, .button.recover.enabled").removeClass("active");
+                    $(this).addClass("active");
+
+                    selection["target"] = null;
+                    selection["action"] = "attack";
+                    selection["adversary"] = $(this).attr("data-target");
+                });
+
+                $("#submit_button").click(function() {
+                    $(this).removeClass("error");
+                    
+                    if (selection["action"] &&
+                            selection["target"] && selection["action"] == "recover"
+                            || selection["card"] && selection["adversary"]) {
+                        console.log(selection);
+                    } else {
+                        $(this).addClass("error");
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
