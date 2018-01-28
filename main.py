@@ -183,7 +183,7 @@ class Player:
             self.route_usage += recover_value
 
     def add_transmission(self):
-        """Calculates the additional upload for the next round
+        """Calculates the additional download for the next round
         and add it to the total transmission.
         """
         transmission_delta = min(
