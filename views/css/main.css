@@ -1,0 +1,704 @@
+/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+/* ===== Initializr Styles ==================================================
+   Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
+   ========================================================================== */
+
+body {
+    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+}
+
+.wrapper {
+    width: 98%;
+    margin: 0 1%;
+}
+
+/* ===================
+    ALL: Orange Theme
+   =================== */
+
+.header-container {
+    border-bottom: 20px solid #e44d26;
+}
+
+.footer-container,
+.main aside {
+    border-top: 20px solid #e44d26;
+}
+
+.header-container,
+.footer-container,
+.main aside {
+    background: #f16529;
+}
+
+.title {
+    color: white;
+}
+
+/* ==============
+    MOBILE: Menu
+   ============== */
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+nav a {
+    display: block;
+    margin-bottom: 10px;
+    padding: 15px 0;
+
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+
+    color: white;
+    background: #e44d26;
+}
+
+nav a:hover,
+nav a:visited {
+    color: white;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ==============
+    MOBILE: Main
+   ============== */
+
+.main {
+    padding: 1% 0;
+}
+
+.main article h1 {
+    font-size: 2em;
+}
+
+.main aside {
+    color: white;
+    padding: 0px 5% 10px;
+}
+
+.footer-container footer {
+    color: white;
+    padding: 20px 0;
+}
+
+/* ===============
+    ALL: IE Fixes
+   =============== */
+
+.ie7 .title {
+    padding-top: 20px;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+html, body {
+    height: 100%;
+    min-height: 100%;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1em;
+
+      -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+h2 {
+    margin: 0;
+    color: #3de5ff;
+    border-bottom: 2px solid #3de5ff;
+    margin-bottom: 0.2em;
+}
+
+.main-container {
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    background-color: #2e2e2e;
+    overflow: hidden;
+}
+
+.card_holder {
+    width: 100%;
+    float: left;
+    margin-bottom: 1em;
+}
+
+.card {
+    width: 21%;
+    margin-left: 5%;
+    min-height: 6em;
+    color: #2e2e2e;
+    font-size: 1.25em;
+    font-weight: bold;
+    background-color: #3de5ff;
+    text-transform: uppercase;
+    float: left;
+    cursor: pointer;
+    border-bottom: 4px solid #0782ce;
+}
+
+.card p {
+    padding-left: 0.2em;
+    margin: 0;
+}
+
+.card:first-child {
+    margin-left: 0;
+}
+
+.card:hover, .card.active {
+    background-color: #0782ce;
+    border-top: 4px solid #2e2e2e;
+    border-bottom: none;
+}
+
+.rules {
+    width: 21%;
+    margin-left: 5%;
+    min-height: 6em;
+    color: #3de5ff;
+    font-weight: bold;
+    background-color: #2e2e2e;
+    float: left;
+}
+
+.rules h3 {
+    padding-left: 0.2em;
+    margin: 0;
+    font-size: 1.25em;
+}
+
+.rules p {
+    padding-left: 0.2em;
+    margin: 0;
+}
+
+.stats_holder {
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
+.usage_measure {
+    height: 2em;
+    width: 30%;
+    border-bottom: 2px solid #3de5ff;
+    margin-left: 5%;
+    text-transform: uppercase;
+    color: #0782ce;
+    font-weight: bold;
+    line-height: 2em;
+    float: left;
+}
+
+.usage_measure:first-child {
+    margin-left: 0;
+}
+
+#cpu_usage {
+    height: 100%;
+    width: 0%;
+    background-color: #dbcf2e;
+}
+
+#bandwidth_usage {
+    height: 100%;
+    width: 0%;
+    background-color: #dbcf2e;
+}
+
+#route_usage {
+    height: 100%;
+    width: 0%;
+    background-color: #29c421;
+}
+
+.recover_holder {
+    height: 2em;
+    width: 30%;
+    float: left;
+    margin-left: 5%;
+    text-transform: uppercase;
+    color: #0782ce;
+    font-weight: bold;
+    line-height: 2em;
+}
+
+.recover_holder:first-child {
+    margin-left: 0;
+}
+
+.recover_holder .button {
+    height: 100%;
+    width: 100%;
+    background-color: #3de5ff;
+    color: #2e2e2e;
+    opacity: 0.2;
+    border-bottom: 2px solid #0782ce;
+}
+
+.recover_holder .button.enabled {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.recover_holder .button.enabled:hover,
+.recover_holder .button.active {
+    background-color: #0782ce;
+    border-top: 2px solid #2e2e2e;
+    border-bottom: none;
+}
+
+.costs {
+    color: #ce0857;
+}
+
+.opponent_row {
+    height: 4em;
+    margin-bottom: 1em;
+}
+
+.opponent_holder,
+.submit_button_holder {
+    width: 21%;
+    margin-left: 5%;
+    float: left;
+    cursor: pointer;
+}
+
+.opponent_holder:first-child {
+    margin-left: 0;
+}
+
+.opponent_holder.active .opponent_name,
+.opponent_holder:hover .opponent_name {
+    background-color: #0782ce;
+}
+
+.opponent_name {
+    color: #3de5ff;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.opponent_stats {
+    height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.opponent_stat {
+    width: 30%;
+    margin-left: 5%;
+    height: 100%;
+    float: left;
+}
+
+.opponent_stat:first-child {
+    margin-left: 0;
+}
+
+.opponent_cpu {
+    background-color: #dbcf2e;
+}
+
+.opponent_bandwidth {
+    background-color: #ce0857;
+}
+
+.opponent_route {
+    background-color: #29c421;
+}
+
+.opponent_upload {
+    height: 1em;
+    width: 70%;
+    background-color: #0782ce;
+}
+
+#submit_button {
+    height: 100%;
+    width: 100%;
+    color: #2e2e2e;
+    background-color: #3de5ff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5em;
+    line-height: 3em;
+    border-bottom: 4px solid #0782ce;
+    cursor: pointer;
+}
+
+#submit_button:hover {
+    background-color: #0782ce;
+    border-top: 4px solid #2e2e2e;
+    border-bottom: none;
+}
+
+#submit_button.error {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.upload_holder {
+    width: 100%;
+    text-transform: uppercase;
+    color: #0782ce;
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 2em;
+    margin-bottom: 1em;
+    border-bottom: 2px solid #3de5ff;
+}
+
+#upload {
+    height: 2em;
+    background-color: #0782ce;
+    font-size: 1em;
+    width: 0%;
+}
+
+.bg_font {
+    margin-top: -2em;
+    text-transform: uppercase;
+    color: #2e2e2e;
+    font-weight: bold;
+    line-height: 2em;
+    overflow: hidden;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.game_name_input_holder {
+    min-width: 10em;
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+.game_name_input_holder h2 {
+    margin-bottom: 1em;
+}
+
+.game_name_input_holder input {
+    width: 97%;
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 3em;
+    margin-bottom: 1em;
+    background-color: #2e2e2e;
+    border: 2px solid #3de5ff;
+    color: #0782ce;
+    padding-left: 2%;
+}
+
+.error_box {
+    width: 100%;
+    margin-bottom: 1em;
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #ce0857;
+}
+
+/*
+blue 3de5ff
+darkblue 0782ce
+yellow dbcf2e
+red ce0857
+green 29c421
+grey 2e2e2e
+*/
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 480px) {
+
+/* ====================
+    INTERMEDIATE: Menu
+   ==================== */
+
+    nav a {
+        float: left;
+        width: 27%;
+        margin: 0 1.7%;
+        padding: 25px 2%;
+        margin-bottom: 0;
+    }
+
+    nav li:first-child a {
+        margin-left: 0;
+    }
+
+    nav li:last-child a {
+        margin-right: 0;
+    }
+
+/* ========================
+    INTERMEDIATE: IE Fixes
+   ======================== */
+
+    nav ul li {
+        display: inline;
+    }
+
+    .oldie nav a {
+        margin: 0 0.7%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+
+/* ====================
+    WIDE: CSS3 Effects
+   ==================== */
+
+    .header-container,
+    .main aside {
+        -webkit-box-shadow: 0 5px 10px #aaa;
+           -moz-box-shadow: 0 5px 10px #aaa;
+                box-shadow: 0 5px 10px #aaa;
+    }
+
+/* ============
+    WIDE: Menu
+   ============ */
+
+    .title {
+        float: left;
+    }
+
+    nav {
+        float: right;
+        width: 38%;
+    }
+
+/* ============
+    WIDE: Main
+   ============ */
+
+    .main article {
+        float: left;
+        width: 57%;
+    }
+
+    .main aside {
+        float: right;
+        width: 28%;
+    }
+}
+
+@media only screen and (min-width: 1140px) {
+
+/* ===============
+    Maximal Width
+   =============== */
+
+    .wrapper {
+        width: 1026px; /* 1140px - 10% for margins */
+        margin: 0 auto;
+    }
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from bottle import app, get, post, run, request, response
+from bottle import app, get, post, route, run, request, response, redirect, static_file, view
 import random
 
 app().catchall = False
@@ -12,7 +12,7 @@ malus_total = 5
 recover_value = 50
 
 class Game:
-    players = []
+    players = {}
     current_round = 0
     game_running = False
 
@@ -27,17 +27,17 @@ class Game:
     def add_player(self, new_player):
         """Adds a player, if possible.
         """
-        for player in self.players:
-            if player.name == new_player.name:
+        for username, player in self.players.items():
+            if username == new_player.name:
                 return False
 
-        self.players.append(new_player)
+        self.players[new_player.name] = new_player
         return True
 
     def start_game(self):
         """Starts a game.
         """
-        if self.game_running or len(self.players) < 2 or len(self.players) > 8:
+        if len(self.players) < 2 or len(self.players) > 8:
             return False
         else:
             self.game_running = True
@@ -46,7 +46,7 @@ class Game:
     def next_round(self):
         """Calculates all actions and the next round.
         """
-        for player in players:
+        for username, player in self.players.items():
             if player.current_action == "attack":
                 if player.current_opponent is not None \
                         and player.current_card is not None:
@@ -57,11 +57,11 @@ class Game:
                         player.current_card
                     )
 
-        for player in players:
+        for username, player in self.players.items():
             if player.current_action == "recover":
                 player.recover()
 
-        for player in players:
+        for username, player in self.players.items():
             player.next_round()
 
         self.current_round += 1
@@ -91,6 +91,8 @@ class Card:
     def __init__(self):
         """Generates random values for the usages and which malus you get.
         """
+        random.seed()
+
         global attack_total
         random_values = []
         random_values.append(
@@ -131,7 +133,11 @@ class Player:
 
     def __init__(self, username):
         self.name = username
-        self.cards = [Card(), Card(), Card()]
+        random.seed(username)
+        card1 = Card()
+        card2 = Card()
+        card3 = Card()
+        self.cards = [card1, card2, card3]
 
     def select_action(self, action, opponent=None, card=None):
         if self.current_action is None:
@@ -221,9 +227,9 @@ def action_join(group_name):
         if this_game.add_player(new_player):
             return { "status": "OK" }
         else:
-            return { "status": "FAIL" }
+            return { "status": "FAIL", "message": "Player already exists." }
     else:
-        return { "status": "FAIL" }
+        return { "status": "FAIL", "message": "Game is already running, it's not possible to join now." }
 
 # For URL http://localhost:12345/start_game
 @post('/<group_name>/start_game')
@@ -232,27 +238,86 @@ def action_start_game(group_name):
 
     global games
     if not group_name in games:
-        return { "status": "FAIL" }
+        return { "status": "FAIL", "message": "Game was not found." }
 
     this_game = games[group_name]
 
     if this_game.start_game():
         return { "status": "OK" }
     else:
-        return { "status": "FAIL" }
+        return { "status": "FAIL", "message": "Game is not ready yet." }
 
-@get('/<group_name>/stat')
+@get('/<group_name>/status')
 def action_stat(group_name):
     response.content_type = "application/json"
 
     global games
     if not group_name in games:
-        return { "status": "FAIL" }
+        return { "status": "FAIL", "message": "Game was not found." }
 
     this_game = games[group_name]
 
     return this_game.stat()
 
+@get('/<group_name>')
+def action_redirect(group_name):
+    redirect("/")
+
+@get('/<group_name>/game')
+@view('index')
+def overview(group_name):
+    username = request.query["username"]
+
+    global games
+    if not group_name in games:
+        redirect("/")
+
+    if not games[group_name].game_running:
+        redirect("/")
+
+    this_game = games[group_name]
+    return {
+        "username": username,
+        "players": this_game.players
+    }
+
+@route('/css/<filepath:path>')
+def server_static(filepath):
+    return static_file(filepath, root="./views/css")
+@route('/img/<filepath:path>')
+def server_static(filepath):
+    return static_file(filepath, root="./views/img")
+@route('/js/<filepath:path>')
+def server_static(filepath):
+    return static_file(filepath, root="./views/js")
+
+@route('/<group_name>/css/<filepath:path>')
+def server_static(group_name, filepath):
+    return static_file(filepath, root="./views/css")
+@route('/<group_name>/img/<filepath:path>')
+def server_static(group_name, filepath):
+    return static_file(filepath, root="./views/img")
+@route('/<group_name>/js/<filepath:path>')
+def server_static(group_name, filepath):
+    return static_file(filepath, root="./views/js")
+
+# The main page
+@route('/')
+@view('new_game')
+def index():
+    return dict()
+
+# waiting page
+@get('/<group_name>/wait')
+@view('wait')
+def action_wait(group_name):
+    global games
+    if not group_name in games:
+        redirect("/")
+    
+    username = request.query["username"]
+    return { "username": username }
+
 # Main function
 if __name__ == '__main__':
-    run(host='localhost', port=12345)
+    run(host='0.0.0.0', port=80)
