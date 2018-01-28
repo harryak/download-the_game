@@ -1,13 +1,77 @@
 #!/usr/bin/env python
-from bottle import route, run
+from bottle import app, get, post, run, response
 import random
 
+app().catchall = False
+
 # Global games.
-games = []
+games = {}
 
 attack_total = 15
 malus_total = 5
 recover_value = 50
+
+class Game:
+    players = []
+    current_round = 0
+    game_running = False
+
+    def __init__(self):
+        """Initializes a game.
+        """
+        pass
+
+    def join_possible(self):
+        return not self.game_running and len(self.players) < 8
+
+    def add_player(self, new_player):
+        """Adds a player, if possible.
+        """
+        for player in self.players:
+            if player.name == new_player.name:
+                return False
+
+        self.players.append(new_player)
+        return True
+
+    def start_game(self):
+        """Starts a game.
+        """
+        if self.game_running or len(players) < 2 or len(players) > 8:
+            return False
+        else:
+            self.game_running = True
+            return True
+
+    def next_round(self):
+        """Calculates all actions and the next round.
+        """
+        for player in players:
+            if player.current_action == "attack":
+                if player.current_opponent is not None \
+                        and player.current_card is not None:
+                    player.current_opponent.incoming_attack(
+                        player.current_card
+                    )
+                    player.outgoing_attack(
+                        player.current_card
+                    )
+
+        for player in players:
+            if player.current_action == "recover":
+                player.recover()
+
+        for player in players:
+            player.next_round()
+
+        self.current_round += 1
+
+    def stat(self):
+        return {
+            "players": len(self.players),
+            "round": self.current_round,
+            "running": self.game_running
+        }
 
 class Card:
     """Has attack points (attack_total in sum) and a malus of one value.
@@ -109,9 +173,9 @@ class Player:
         global recover_value
         if stat == 'cpu':
             self.cpu_usage += recover_value
-        else if stat == 'bandwidth':
+        elif stat == 'bandwidth':
             self.bandwidth += recover_value
-        else if stat == 'route_usage':
+        elif stat == 'route_usage':
             self.route_usage += recover_value
 
     def add_transmission(self):
@@ -140,26 +204,57 @@ class Player:
 
         self.current_action = None
 
-# For URL http://localhost:8080/join
-@post('<group_name>/join')
+# For URL http://localhost:12345/join
+@post('/<group_name>/join')
 def action_join(group_name):
-    # Get username from request.
-    username = request.json.username
-    if join_possible:
-        return { status: "OK" }
-    else:
-        return { status: "FAIL" }
+    response.content_type = "application/json"
 
-# For URL http://localhost:8080/start_game
-@post('<group_name>/start_game')
+    global games
+    if not group_name in games:
+        games[group_name] = Game()
+
+    this_game = games[group_name]
+
+    # Get username from request.
+    if this_game.join_possible():
+        username = request.json.username
+        new_player = Player(username)
+
+        if this_game.add_player:
+            return { "status": "OK" }
+        else:
+            return { "status": "FAIL" }
+    else:
+        return { "status": "FAIL" }
+
+# For URL http://localhost:12345/start_game
+@post('/<group_name>/start_game')
 def action_start_game(group_name):
-    # Disable possibility to join game
-    global join_possible
-    join_possible = False
-    # Get stats for user from request.
-    # TODO
-    return { status: "OK" }
+    response.content_type = "application/json"
+
+    global games
+    if not group_name in games:
+        return { "status": "FAIL" }
+
+    this_game = games[group_name]
+
+    if this_game.start_game():
+        return { "status": "OK" }
+    else:
+        return { "status": "FAIL" }
+
+@get('/<group_name>/stat')
+def action_stat(group_name):
+    response.content_type = "application/json"
+
+    global games
+    if not group_name in games:
+        return { "status": "FAIL" }
+
+    this_game = games[group_name]
+
+    return this_game.stat()
 
 # Main function
 if __name__ == '__main__':
-    run(host='localhost', port=8080)
+    run(host='localhost', port=12345)
