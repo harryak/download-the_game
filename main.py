@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from bottle import app, get, post, run, response
+from bottle import app, get, post, run, request, response
 import random
 
 app().catchall = False
@@ -37,7 +37,7 @@ class Game:
     def start_game(self):
         """Starts a game.
         """
-        if self.game_running or len(players) < 2 or len(players) > 8:
+        if self.game_running or len(self.players) < 2 or len(self.players) > 8:
             return False
         else:
             self.game_running = True
@@ -100,20 +100,18 @@ class Card:
             random.randint(0, attack_total - random_values[0])
         )
         random_values.append(
-            random.randint(
-                0, attack_total - random_values[0] - random_values[1]
-            )
+            attack_total - random_values[0] - random_values[1]
         )
 
-        random_values = random.shuffle(random_values)
+        random.shuffle(random_values)
 
-        attack_points[0]['value'] = random_values[0]
-        attack_points[1]['value'] = random_values[1]
-        attack_points[2]['value'] = random_values[2]
+        self.attack_points[0]['value'] = random_values[0]
+        self.attack_points[1]['value'] = random_values[1]
+        self.attack_points[2]['value'] = random_values[2]
 
         global malus_total
-        index = randint(0, 2)
-        malus_points[index]['value'] = malus_total
+        index = random.randint(0, 2)
+        self.malus_points[index]['value'] = malus_total
 
 class Player:
     """Holds all information that belongs to a single player.
@@ -217,10 +215,10 @@ def action_join(group_name):
 
     # Get username from request.
     if this_game.join_possible():
-        username = request.json.username
+        username = request.json["username"]
         new_player = Player(username)
 
-        if this_game.add_player:
+        if this_game.add_player(new_player):
             return { "status": "OK" }
         else:
             return { "status": "FAIL" }
