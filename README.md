@@ -18,7 +18,7 @@ The goal is to get your own download to finish first. It advances automatically,
 
 ## Your System's Status
 
-There are three measures that define, what resources on your system are used: The available CPU usage, the available bandwidth and the available route. If only one of them is blocked (not available), your download can not proceed!
+There are three measures that define what resources on your system are used: The available CPU usage, the available bandwidth and the available route. If only one of them is blocked (not available), your download can not proceed!
 
 The lowest of the three values determines, how much you can download per round. So if you don't have enough CPU available, it will be a bottleneck.
 
