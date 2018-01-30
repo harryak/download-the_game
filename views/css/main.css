@@ -173,22 +173,21 @@ h2 {
     margin: 0;
     color: #3de5ff;
     border-bottom: 2px solid #3de5ff;
-    margin-bottom: 0.2em;
+    font-size: 1.25em;
+    margin-bottom: 0.4em;
 }
 
 .main-container {
-    height: 100%;
     width: 100%;
     min-height: 100%;
     min-width: 100%;
     background-color: #2e2e2e;
-    overflow: hidden;
 }
 
 .card_holder {
     width: 100%;
     float: left;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 }
 
 .card {
@@ -265,19 +264,16 @@ h2 {
 #cpu_usage {
     height: 100%;
     width: 0%;
-    background-color: #dbcf2e;
 }
 
 #bandwidth_usage {
     height: 100%;
     width: 0%;
-    background-color: #dbcf2e;
 }
 
 #route_usage {
     height: 100%;
     width: 0%;
-    background-color: #29c421;
 }
 
 .recover_holder {
@@ -289,6 +285,7 @@ h2 {
     color: #0782ce;
     font-weight: bold;
     line-height: 2em;
+    margin-bottom: 2px;
 }
 
 .recover_holder:first-child {
@@ -342,6 +339,10 @@ h2 {
     background-color: #0782ce;
 }
 
+.opponent_holder.empty {
+    cursor: initial;
+}
+
 .opponent_name {
     color: #3de5ff;
     font-weight: bold;
@@ -365,18 +366,18 @@ h2 {
 }
 
 .opponent_cpu {
-    background-color: #dbcf2e;
+    background-color: #2e2e2e;
 }
 
 .opponent_bandwidth {
-    background-color: #ce0857;
+    background-color: #2e2e2e;
 }
 
 .opponent_route {
-    background-color: #29c421;
+    background-color: #2e2e2e;
 }
 
-.opponent_upload {
+.opponent_download {
     height: 1em;
     width: 70%;
     background-color: #0782ce;
@@ -393,6 +394,8 @@ h2 {
     line-height: 3em;
     border-bottom: 4px solid #0782ce;
     cursor: pointer;
+    overflow: hidden;
+    text-align: center;
 }
 
 #submit_button:hover {
@@ -408,18 +411,18 @@ h2 {
     perspective: 1000px;
 }
 
-.upload_holder {
+.download_holder {
     width: 100%;
     text-transform: uppercase;
     color: #0782ce;
     font-size: 2em;
     font-weight: bold;
     line-height: 2em;
-    margin-bottom: 1em;
+    margin-bottom: 0.25em;
     border-bottom: 2px solid #3de5ff;
 }
 
-#upload {
+#download {
     height: 2em;
     background-color: #0782ce;
     font-size: 1em;
@@ -480,6 +483,30 @@ h2 {
     margin-bottom: 1em;
     font-size: 1.25em;
     font-weight: bold;
+    color: #ce0857;
+}
+
+.green_bg {
+    background-color: #29c421;
+}
+
+.yellow_bg {
+    background-color: #dbcf2e;
+}
+
+.red_bg {
+    background-color: #ce0857;
+}
+
+.green_text {
+    color: #29c421;
+}
+
+.yellow_text {
+    color: #dbcf2e;
+}
+
+.red_text {
     color: #ce0857;
 }
 

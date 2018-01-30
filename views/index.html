@@ -31,19 +31,19 @@
                     <div class="stats_holder clearfix">
                         <div class="usage_measure">
                             &nbsp;CPU
-                            <div id="cpu_usage" class="bg_font" style="width: {{players[username].cpu_usage}}%;">
+                            <div id="cpu_usage" class="bg_font {{players[username].cpu_color_class}}_bg" style="width: {{players[username].cpu_usage}}%;">
                                 &nbsp;CPU
                             </div>
                         </div>
                         <div class="usage_measure">
                             &nbsp;bandwidth
-                            <div id="bandwidth_usage" class="bg_font" style="width: {{players[username].bandwidth_usage}}%;">
+                            <div id="bandwidth_usage" class="bg_font {{players[username].bandwidth_color_class}}_bg" style="width: {{players[username].bandwidth_usage}}%;">
                                 &nbsp;bandwidth
                             </div>
                         </div>
                         <div class="usage_measure">
                             &nbsp;route
-                            <div id="route_usage" class="bg_font" style="width: {{players[username].route_usage}}%;">
+                            <div id="route_usage" class="bg_font {{players[username].route_color_class}}_bg" style="width: {{players[username].route_usage}}%;">
                                 &nbsp;route
                             </div>
                         </div>
@@ -67,37 +67,27 @@
                     </div>
                 </div>
                 <div class="clearfix">
-                    <div class="upload_holder">
-                        &nbsp;download
-                        <div class="bg_font" id="upload" style="width: {{players[username].transmission}}%;">
-                            &nbsp;download
+                    <div class="download_holder">
+                        &nbsp;download&nbsp;{{players[username].transmission}}%
+                        <div class="bg_font" id="download" style="width: {{players[username].transmission}}%;">
+                            &nbsp;download&nbsp;{{players[username].transmission}}%
                         </div>
                     </div>
                 </div>
                 <div class="clearfix">
                     <h2>Attacks</h2>
                     <div class="card_holder clearfix">
-                        <div class="card" id="card_0" data-target="0">
-                            <p>Attack 1:</p>
-                            <p>CPU: <span class="value_font">{{players[username].cards[0].attack_points[0]['value']}}</span></p>
-                            <p>BW: <span class="value_font">{{players[username].cards[0].attack_points[1]['value']}}</span></p>
-                            <p>RT: <span class="value_font">{{players[username].cards[0].attack_points[2]['value']}}</span></p>
-                            <p class="costs">costs: CPU</p>
+                    % i = 0
+                    % for card in players[username].cards:
+                        <div class="card" id="card_{{i}}" data-target="{{i}}">
+                            <p>Attack {{i + 1}}:</p>
+                            <p>CPU: <span class="value_font">{{card.attack_points[0]['value']}}</span></p>
+                            <p>BW: <span class="value_font">{{card.attack_points[1]['value']}}</span></p>
+                            <p>RT: <span class="value_font">{{card.attack_points[2]['value']}}</span></p>
+                            <p class="costs">costs: {{card.malus_points[card.which_malus]['name']}}</p>
                         </div>
-                        <div class="card" id="card_1" data-target="1">
-                            <p>Attack 2:</p>
-                            <p>CPU: <span class="value_font">{{players[username].cards[1].attack_points[0]['value']}}</span></p>
-                            <p>BW: <span class="value_font">{{players[username].cards[1].attack_points[1]['value']}}</span></p>
-                            <p>RT: <span class="value_font">{{players[username].cards[1].attack_points[2]['value']}}</span></p>
-                            <p class="costs">costs: CPU</p>
-                        </div>
-                        <div class="card" id="card_2" data-target="2">
-                            <p>Attack 3:</p>
-                            <p>CPU: <span class="value_font">{{players[username].cards[2].attack_points[0]['value']}}</span></p>
-                            <p>BW: <span class="value_font">{{players[username].cards[2].attack_points[1]['value']}}</span></p>
-                            <p>RT: <span class="value_font">{{players[username].cards[2].attack_points[2]['value']}}</span></p>
-                            <p class="costs">costs: CPU</p>
-                        </div>
+                        % i += 1
+                    % end
                         <div class="rules">
                             <h3>Rules:</h3>
                             <p>Select attack and adversary</p>
@@ -109,27 +99,37 @@
                 <div class="clearfix">
                     <h2>Adversaries</h2>
                     <div class="opponent_row clearfix">
-                        % for name, player in players.items():
-                            % if name != username:
-                                <div class="opponent_holder clearfix" data-target="{{player.name}}">
-                                    <div class="opponent_name">
-                                        &nbsp;{{player.name}}
-                                    </div>
-                                    <div class="opponent_stats clearfix">
-                                        <div class="opponent_stat opponent_cpu">
-                                        </div>
-                                        <div class="opponent_stat opponent_bandwidth">
-                                        </div>
-                                        <div class="opponent_stat opponent_route">
-                                        </div>
-                                    </div>
-                                    <div class="opponent_upload" style="width: {{player.transmission}}%;">
-                                    </div>
+            % i = 0
+            % for name, player in players.items():
+                % if name != username:
+                        <div class="opponent_holder clearfix" data-target="{{player.name}}">
+                            <div class="opponent_name">
+                                &nbsp;{{player.name}}
+                            </div>
+                            <div class="opponent_stats clearfix">
+                                <div class="opponent_stat opponent_cpu {{player.cpu_color_class}}_bg">
                                 </div>
-                            % end
-                        % end
-                    </div>
-                    <div class="opponent_row clearfix">
+                                <div class="opponent_stat opponent_bandwidth {{player.bandwidth_color_class}}_bg">
+                                </div>
+                                <div class="opponent_stat opponent_route {{player.route_color_class}}_bg">
+                                </div>
+                            </div>
+                            <div class="opponent_download" style="width: {{player.transmission}}%;">
+                            </div>
+                        </div>
+                    % i += 1
+                    % if (i % 4) == 0:
+                        </div>
+                        <div class="opponent_row clearfix">
+                    % end
+                % end
+            % end
+                    % while (i % 4) < 3:
+                        <div class="opponent_holder empty clearfix">
+                            &nbsp;
+                        </div>
+                        % i += 1
+                    % end
                         <div class="submit_button_holder clearfix">
                             <div id="submit_button">
                                 &nbsp;confirm
@@ -164,7 +164,7 @@
                     selection["card"] = $(this).attr("data-target");
                 });
 
-                $(".opponent_holder").click(function() {
+                $(".opponent_holder:not(.empty)").click(function() {
                     $(".opponent_holder, .button.recover.enabled").removeClass("active");
                     $(this).addClass("active");
 

@@ -12,14 +12,13 @@ malus_total = 5
 recover_value = 50
 
 class Game:
-    players = {}
     current_round = 0
     game_running = False
 
     def __init__(self):
         """Initializes a game.
         """
-        pass
+        self.players = {}
 
     def join_possible(self):
         return not self.game_running and len(self.players) < 8
@@ -76,30 +75,32 @@ class Game:
 class Card:
     """Has attack points (attack_total in sum) and a malus of one value.
     """
-    attack_points = [
-        {'name': 'cpu', 'value': 0},
-        {'name': 'bandwidth', 'value': 0},
-        {'name': 'route', 'value': 0}
-    ]
-
-    malus_points = [
-        {'name': 'cpu', 'value': 0},
-        {'name': 'bandwidth', 'value': 0},
-        {'name': 'route', 'value': 0}
-    ]
+    which_malus = 0
 
     def __init__(self):
         """Generates random values for the usages and which malus you get.
         """
+        self.attack_points = [
+            {'name': 'cpu', 'value': 0},
+            {'name': 'bw', 'value': 0},
+            {'name': 'rt', 'value': 0}
+        ]
+
+        self.malus_points = [
+            {'name': 'cpu', 'value': 0},
+            {'name': 'bw', 'value': 0},
+            {'name': 'rt', 'value': 0}
+        ]
+
         random.seed()
 
         global attack_total
         random_values = []
         random_values.append(
-            random.randint(0, attack_total)
+            random.randint(0, attack_total - 3)
         )
         random_values.append(
-            random.randint(0, attack_total - random_values[0])
+            random.randint(0, attack_total - random_values[0] - 1)
         )
         random_values.append(
             attack_total - random_values[0] - random_values[1]
@@ -112,8 +113,8 @@ class Card:
         self.attack_points[2]['value'] = random_values[2]
 
         global malus_total
-        index = random.randint(0, 2)
-        self.malus_points[index]['value'] = malus_total
+        self.which_malus = random.randint(0, 2)
+        self.malus_points[self.which_malus]['value'] = malus_total
 
 class Player:
     """Holds all information that belongs to a single player.
@@ -125,7 +126,10 @@ class Player:
     bandwidth_usage = 50
     route_usage = 50
 
-    cards = []
+    # Class for displaying color codes in frontend.
+    cpu_color_class = "red"
+    bandwidth_color_class = "red"
+    route_color_class = "red"
 
     current_action = None
     current_opponent = None
@@ -133,17 +137,20 @@ class Player:
 
     def __init__(self, username):
         self.name = username
-        random.seed(username)
-        card1 = Card()
-        card2 = Card()
-        card3 = Card()
-        self.cards = [card1, card2, card3]
+        self.cards = []
+        self.cards.append(Card())
+        self.cards.append(Card())
+        self.cards.append(Card())
+
+        print(username, flush=True)
+        for card in self.cards:
+            print(str(card.attack_points[0]['value']) + " " + str(card.attack_points[1]['value']) + " "+ str(card.attack_points[2]['value']), flush=True)
+        self.set_color_classes()
 
     def select_action(self, action, opponent=None, card=None):
-        if self.current_action is None:
-            self.current_action = attack
-            self.opponent = opponent
-            self.current_card = card
+        self.current_action = action
+        self.opponent = opponent
+        self.current_card = card
 
     def incoming_attack(self, card):
         """If a player gets attacked with a card, add values to player stats.
@@ -193,6 +200,20 @@ class Player:
         )
         self.transmission += transmission_delta
 
+    def get_color_class(self, value):
+        """Returns a color class based on the given value.
+        """
+        if value > 33:
+            return "yellow"
+        if value > 66:
+            return "green"
+        return "red"
+
+    def set_color_classes(self):
+        self.cpu_color_class = self.get_color_class(self.cpu_usage)
+        self.bandwidth_color_class = self.get_color_class(self.bandwidth_usage)
+        self.route_color_class = self.get_color_class(self.route_usage)
+
     def next_round(self):
         """Add transmission points, reset action and replace card, if one was
         used.
@@ -225,6 +246,13 @@ def action_join(group_name):
         new_player = Player(username)
 
         if this_game.add_player(new_player):
+            this_game.add_player(Player("Franz"))
+            this_game.players["Franz"].transmission += 24
+            this_game.players["Franz"].cpu_usage += 24
+            this_game.players["Franz"].set_color_classes()
+            this_game.add_player(Player("Horst"))
+            this_game.add_player(Player("Udo"))
+            this_game.add_player(Player("Heinz"))
             return { "status": "OK" }
         else:
             return { "status": "FAIL", "message": "Player already exists." }
@@ -320,4 +348,4 @@ def action_wait(group_name):
 
 # Main function
 if __name__ == '__main__':
-    run(host='0.0.0.0', port=80)
+    run(host='localhost', port=80)
